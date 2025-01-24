@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <context>
+        <name>Itona_Dast</name>
+        <desc/>
+        <inscope>true</inscope>
+        <incregexes>https://dev-itona.xyz</incregexes>
+        <tech>
+            <include>Db.PostgreSQL</include>
+            <include>Language.JavaScript</include>
+            <include>Language.PHP</include>
+            <include>Language.Python</include>
+            <include>Language.XML</include>
+            <include>OS.Linux</include>
+            <include>Protocol</include>
+            <include>Protocol.LDAP</include>
+            <include>SCM</include>
+            <include>SCM.Git</include>
+            <include>SCM.SVN</include>
+            <include>WS.Apache</include>
+            <exclude>Db</exclude>
+            <exclude>Db.CouchDB</exclude>
+            <exclude>Db.Firebird</exclude>
+            <exclude>Db.HypersonicSQL</exclude>
+            <exclude>Db.IBM DB2</exclude>
+            <exclude>Db.Microsoft Access</exclude>
+            <exclude>Db.Microsoft SQL Server</exclude>
+            <exclude>Db.MongoDB</exclude>
+            <exclude>Db.MySQL</exclude>
+            <exclude>Db.Oracle</exclude>
+            <exclude>Db.SAP MaxDB</exclude>
+            <exclude>Db.SQLite</exclude>
+            <exclude>Db.Sybase</exclude>
+            <exclude>Language</exclude>
+            <exclude>Language.ASP</exclude>
+            <exclude>Language.C</exclude>
+            <exclude>Language.JSP/Servlet</exclude>
+            <exclude>Language.Java</exclude>
+            <exclude>Language.Java.Spring</exclude>
+            <exclude>Language.Ruby</exclude>
+            <exclude>OS</exclude>
+            <exclude>OS.MacOS</exclude>
+            <exclude>OS.Windows</exclude>
+            <exclude>WS</exclude>
+            <exclude>WS.IIS</exclude>
+            <exclude>WS.Tomcat</exclude>
+        </tech>
+        <urlparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </urlparser>
+        <postparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </postparser>
+        <authentication>
+            <type>6</type>
+            <strategy>POLL_URL</strategy>
+            <pollurl>https://dev-itona.xyz/api/user/tokenAccessEnabled</pollurl>
+            <polldata/>
+            <pollheaders>content-type: application/json</pollheaders>
+            <pollfreq>60</pollfreq>
+            <pollunits>REQUESTS</pollunits>
+            <loggedin>\Q 200 OK\E</loggedin>
+            <loggedout>\Q 401 Not Authorized\E</loggedout>
+            <browser>
+                <loginpageurl>https://dev-itona.xyz/login</loginpageurl>
+                <browserid>chrome</browserid>
+                <loginpagewait>20</loginpagewait>
+            </browser>
+        </authentication>
+        <users>
+            <user>1291;true;cWF0ZXN0aW5nQHRlc3QuY29t;6;cWF0ZXN0aW5nQHRlc3QuY29t~MTIzNDU2Nzg5~</user>
+        </users>
+        <forceduser>1291</forceduser>
+        <session>
+            <type>3</type>
+            <headers>QXV0aG9yaXphdGlvbg==:QmVhcmVyIHslanNvbjp0b2tlbiV9</headers>
+        </session>
+        <authorization>
+            <type>0</type>
+            <basic>
+                <header/>
+                <body/>
+                <logic>AND</logic>
+                <code>-1</code>
+            </basic>
+        </authorization>
+    </context>
+</configuration>

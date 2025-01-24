@@ -1,0 +1,177 @@
+---
+env:
+  contexts:
+  - name: "Itona_Dast"
+    urls:
+    - "https://dev-itona.xyz"
+    excludePaths: []
+    authentication:
+      method: "browser"
+      parameters:
+        loginPageUrl: "https://dev-itona.xyz/login"
+        loginPageWait: 20
+        browserId: "chrome"
+      verification:
+        method: "poll"
+        loggedInRegex: "\\Q 200 OK\\E"
+        loggedOutRegex: "\\Q 401 Unauthorized\\E"
+        pollFrequency: 60
+        pollUnits: "requests"
+        pollUrl: "https://dev-itona.xyz/api/user/tokenAccessEnabled"
+        pollPostData: ""
+        pollAdditionalHeaders:
+        - header: "content-type"
+          value: "application/json"
+    sessionManagement:
+      method: "headers"
+      parameters:
+        Authorization: "Bearer {%json:token%}"
+    technology:
+      exclude:
+      - "C"
+      - "Windows"
+      - "ASP"
+      - "MacOS"
+      - "IBM DB2"
+      - "SQLite"
+      - "CouchDB"
+      - "Microsoft SQL Server"
+      - "Oracle"
+      - "JSP/Servlet"
+      - "Firebird"
+      - "MongoDB"
+      - "HypersonicSQL"
+      - "MySQL"
+      - "SAP MaxDB"
+      - "Ruby"
+      - "IIS"
+      - "Microsoft Access"
+      - "Java"
+      - "Tomcat"
+      - "Sybase"
+    users:
+    - name: "qatesting@test.com"
+      credentials:
+        password: "123456789"
+        username: "qatesting@test.com"
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+- parameters:
+    maxAlertsPerRule: 20
+    scanOnlyInScope: true
+    maxBodySizeInBytesToScan: 0
+    enableTags: false
+    disableAllRules: false
+  rules: []
+  name: "passiveScan-config"
+  type: "passiveScan-config"
+- parameters:
+    context: "Itona_Dast"
+    user: "qatesting@test.com"
+    url: "https://dev-itona.xyz"
+    maxDuration: 0
+    maxDepth: 0
+    maxChildren: 0
+    acceptCookies: true
+    handleODataParametersVisited: false
+    handleParameters: "IGNORE_COMPLETELY"
+    maxParseSizeBytes: 0
+    parseComments: true
+    parseGit: false
+    parseRobotsTxt: true
+    parseSitemapXml: true
+    parseSVNEntries: false
+    postForm: true
+    processForm: true
+    requestWaitTime: 0
+    sendRefererHeader: true
+    userAgent: ""
+  tests:
+  - onFail: "ERROR"
+    statistic: "automation.spider.urls.added"
+    site: "https://dev-itona.xyz"
+    operator: ">="
+    value: 100
+    name: "At least 100 URLs found"
+    type: "stats"
+  name: "spider"
+  type: "spider"
+- parameters:
+    context: "Itona_Dast"
+    user: "qatesting@test.com"
+    url: "https://dev-itona.xyz"
+    maxDuration: 60
+    maxCrawlDepth: 10
+    numberOfBrowsers: 10
+    maxCrawlStates: 0
+    eventWait: 500
+    reloadWait: 500
+    clickDefaultElems: true
+    clickElemsOnce: true
+    randomInputs: true
+    inScopeOnly: true
+    runOnlyIfModern: false
+  tests:
+  - onFail: "ERROR"
+    statistic: "spiderAjax.urls.added"
+    site: ""
+    operator: ">="
+    value: 100
+    name: "At least 100 URLs found"
+    type: "stats"
+  name: "spiderAjax"
+  type: "spiderAjax"
+- parameters:
+    maxDuration: 0
+  name: "passiveScan-wait"
+  type: "passiveScan-wait"
+- parameters:
+    context: "Itona_Dast"
+    user: "qatesting@test.com"
+    policy: ""
+    maxRuleDurationInMins: 0
+    maxScanDurationInMins: 0
+    addQueryParam: true
+    delayInMs: 1000
+    handleAntiCSRFTokens: true
+    injectPluginIdInHeader: true
+    scanHeadersAllRequests: true
+    threadPerHost: 16
+    maxAlertsPerRule: 20
+  policyDefinition:
+    defaultStrength: "high"
+    defaultThreshold: "medium"
+    rules: []
+  name: "activeScan"
+  type: "activeScan"
+- parameters:
+    template: "high-level-report"
+    reportDir: "/home/kali/devsecops"
+    reportFile: "Dynamic Analysis"
+    reportTitle: "Itona Dast ZAP Report"
+    reportDescription: "pentest automation"
+    displayReport: false
+  risks:
+  - "info"
+  - "low"
+  - "medium"
+  - "high"
+  confidences:
+  - "falsepositive"
+  - "low"
+  - "medium"
+  - "high"
+  - "confirmed"
+  sections:
+  - "vulnerabilityImpact"
+  - "bugsCountChart"
+  - "riskSummaryChart"
+  sites:
+  - "dev-itona.xyz"
+  name: "report"
+  type: "report"
+
